@@ -195,10 +195,10 @@ let testRegistrationDeadline = null;
 // Set registration deadline to tomorrow at 8:00 PM
 function getRegistrationDeadline() {
     const now = new Date();
-    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 20, 0, 0, 0); // Tomorrow 8:00 PM
+    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 18, 0, 0, 0); // Tomorrow 8:00 PM
     // If today is already Jan 21 or later, keep deadline at Jan 21, 8:00 PM
     if (now.getMonth() === 0 && now.getDate() >= 21) {
-        deadline = new Date(now.getFullYear(), 0, 21, 20, 0, 0, 0);
+        deadline = new Date(now.getFullYear(), 0, 21, 18, 0, 0, 0);
     }
     return deadline.getTime();
 }
@@ -253,11 +253,11 @@ function updateRunningMessage() {
     }
     // Check if we're on January 20, 2026 before midnight
     if (currentYear === 2026 && currentMonth === 0 && currentDate === 20) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
+        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
     }
     // Check if we're on January 21, 2026 (from midnight to 8 PM)
     else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 20)) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
+        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM  📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM';
     }
     // After 8 PM on January 21
     else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 20) {
@@ -576,3 +576,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
+
