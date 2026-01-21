@@ -236,35 +236,47 @@ function updateCountdown() {
 // Update running message based on date
 function updateRunningMessage() {
     const messageTextEl = document.getElementById('messageText');
+    const cloneEl = document.querySelector('.message-text.clone');
     const messageBanner = document.getElementById('runningMessageBanner');
-    if (!messageTextEl || !messageBanner) return;
+
+    if (!messageTextEl || !cloneEl || !messageBanner) return;
+
     const now = new Date();
-    const currentDate = now.getDate();
-    const currentMonth = now.getMonth(); // 0 = January
-    const currentYear = now.getFullYear();
-    const currentHour = now.getHours();
-    const currentMinute = now.getMinutes();
     const registrationDeadline = new Date(getRegistrationDeadline());
+
+    let text = '';
+
     if (now >= registrationDeadline) {
-        // Show closed message after registration closes
-        messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
-        return;
+        messageBanner.style.background =
+            'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
+        text =
+            '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
     }
-    // Check if we're on January 20, 2026 before midnight
-    if (currentYear === 2026 && currentMonth === 0 && currentDate === 20) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
+    // Jan 20, 2026
+    else if (
+        now.getFullYear() === 2026 &&
+        now.getMonth() === 0 &&
+        now.getDate() === 20
+    ) {
+        text =
+            '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
     }
-    // Check if we're on January 21, 2026 (from midnight to 8 PM)
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 20)) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
+    // Jan 21, 2026 before 8 PM
+    else if (
+        now.getFullYear() === 2026 &&
+        now.getMonth() === 0 &&
+        now.getDate() === 21 &&
+        now.getHours() < 20
+    ) {
+        text =
+            '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
     }
-    // After 8 PM on January 21
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 20) {
-        messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
-    }
+
+    // Set text and clone it (CRITICAL)
+    messageTextEl.textContent = text;
+    cloneEl.textContent = text;
 }
+
 
 // Update countdown every second
 setInterval(() => {
@@ -576,3 +588,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
+
