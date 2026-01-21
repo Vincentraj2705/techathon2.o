@@ -2,12 +2,9 @@
 function typeWriter() {
     const text = "Welcome to TECHATHON 2K26";
     const element = document.querySelector('.typewriter-text');
-    
     if (!element) return;
-    
     let charIndex = 0;
     let isDeleting = false;
-    
     function type() {
         if (!isDeleting && charIndex <= text.length) {
             element.textContent = text.substring(0, charIndex);
@@ -28,14 +25,25 @@ function typeWriter() {
             setTimeout(type, 500); // Pause before retyping
         }
     }
-    
     type();
 }
 
-// Initialize typewriter on page load
-if (document.querySelector('.typewriter-text')) {
-    typeWriter();
+// Always show event closed message in running banner
+function setEventClosedRunningMessage() {
+    const messageTextEl = document.getElementById('messageText');
+    const messageBanner = document.getElementById('runningMessageBanner');
+    if (messageTextEl && messageBanner) {
+        messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
+        messageTextEl.textContent = '❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
+    }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    setEventClosedRunningMessage();
+    if (document.querySelector('.typewriter-text')) {
+        typeWriter();
+    }
+});
 
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
@@ -195,10 +203,10 @@ let testRegistrationDeadline = null;
 // Set registration deadline to tomorrow at 8:00 PM
 function getRegistrationDeadline() {
     const now = new Date();
-    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 18, 0, 0, 0); // Tomorrow 8:00 PM
+    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 20, 0, 0, 0); // Tomorrow 8:00 PM
     // If today is already Jan 21 or later, keep deadline at Jan 21, 8:00 PM
     if (now.getMonth() === 0 && now.getDate() >= 21) {
-        deadline = new Date(now.getFullYear(), 0, 21, 18, 0, 0, 0);
+        deadline = new Date(now.getFullYear(), 0, 21, 20, 0, 0, 0);
     }
     return deadline.getTime();
 }
@@ -253,16 +261,16 @@ function updateRunningMessage() {
     }
     // Check if we're on January 20, 2026 before midnight
     if (currentYear === 2026 && currentMonth === 0 && currentDate === 20) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
+        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
     }
     // Check if we're on January 21, 2026 (from midnight to 8 PM)
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 20)) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM  📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 6:00 PM';
+    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 18)) {
+        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
     }
     // After 8 PM on January 21
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 20) {
+    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 18) {
         messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
+        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB';
     }
 }
 
@@ -294,7 +302,7 @@ function checkRegistrationStatus() {
     // Allow form action until 19:59 (7:59 PM) on Jan 21, 2026
     if (now < registrationDeadline) {
         // If it's Jan 21, 2026 and time is 20:00 or later, close
-        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 18) {
+        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 20) {
             return true; // Closed
         }
         return false; // Open
@@ -576,5 +584,3 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
-
-
