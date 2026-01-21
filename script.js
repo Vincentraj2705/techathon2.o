@@ -67,6 +67,16 @@ if (navLinks.length > 0) {
     });
 }
 
+// Close mobile menu when clicking on a link
+if (navLinks.length > 0) {
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenu) navMenu.classList.remove('active');
+            if (hamburger) hamburger.classList.remove('active');
+        });
+    });
+}
+
 // Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -584,3 +594,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
+
