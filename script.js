@@ -294,7 +294,7 @@ function checkRegistrationStatus() {
     // Allow form action until 19:59 (7:59 PM) on Jan 21, 2026
     if (now < registrationDeadline) {
         // If it's Jan 21, 2026 and time is 20:00 or later, close
-        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 20) {
+        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 18) {
             return true; // Closed
         }
         return false; // Open
@@ -576,4 +576,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
+
 
