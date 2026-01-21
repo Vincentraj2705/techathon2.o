@@ -1,11 +1,38 @@
 /* Ensure running message banner does not cover headings on all pages except homepage */
+/* Banner container */
 .running-message-banner {
     position: fixed;
     top: 64px; /* below navbar */
     left: 0;
     width: 100%;
     z-index: 999;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
+/* Scrolling wrapper */
+.running-message-content {
+    display: flex;
+    width: max-content;
+    animation: marquee 20s linear infinite;
+}
+
+/* Text styling */
+.message-text {
+    padding-right: 60px;
+    font-weight: 600;
+}
+
+/* Seamless scrolling */
+@keyframes marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
 
 body:not(.home) .page-section {
     margin-top: 40px; /* consistent gap for all except home */
@@ -3559,5 +3586,6 @@ section:nth-child(even) {
         font-size: 0.9rem;
     }
 }
+
 
 
