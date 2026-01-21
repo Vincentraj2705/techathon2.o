@@ -7,17 +7,17 @@ const REGISTRATION_FORM_URL = 'https://script.google.com/macros/s/AKfycbx2KKFX8z
 // Returns true if registration is closed, false if open
 function getRegistrationDeadline() {
     const now = new Date();
-    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 20, 0, 0, 0); // Tomorrow 8:00 PM
-    // If today is already Jan 21 or later, keep deadline at Jan 21, 8:00 PM
+    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 18, 0, 0, 0); // Tomorrow 6:00 PM
+    // If today is already Jan 21 or later, keep deadline at Jan 21, 6:00 PM
     if (now.getMonth() === 0 && now.getDate() >= 21) {
-        deadline = new Date(now.getFullYear(), 0, 21, 20, 0, 0, 0);
+        deadline = new Date(now.getFullYear(), 0, 21, 18, 0, 0, 0);
     }
     return deadline.getTime();
 }
 function checkRegistrationStatus() {
     const now = new Date();
     const registrationDeadline = new Date(getRegistrationDeadline());
-    // Allow form action until 19:59 (7:59 PM) on Jan 21, 2026
+    // Allow form action until 17:59 (5:59 PM) on Jan 21, 2026
     if (now < registrationDeadline) {
         if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 20) {
             return true; // Closed
@@ -74,80 +74,22 @@ function updateRunningMessage() {
     const currentYear = now.getFullYear();
     const currentHour = now.getHours();
     const registrationDeadline = new Date(getRegistrationDeadline());
-    if (now >= registrationDeadline) {
-        messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
-        return;
-    }
-    if (currentYear === 2026 && currentMonth === 0 && currentDate === 20) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
-    } else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 20)) {
-        messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
-    } else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 20) {
-        messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
-    }
+    messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
+    messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB';
+    return;
 }
 setInterval(updateRunningMessage, 60000);
 
 document.addEventListener('DOMContentLoaded', function() {
-    updateRunningMessage();
+    // Force running message to always show registration closed
+    const messageTextEl = document.getElementById('messageText');
+    const messageBanner = document.getElementById('runningMessageBanner');
+    if (messageTextEl && messageBanner) {
+        messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
+        messageTextEl.textContent = '❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
+    }
     disableRegistrationForm();
     handleRegisterButtons();
-    const registrationForm = document.getElementById('registrationForm');
-    if (registrationForm && !checkRegistrationStatus()) {
-        registrationForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // ...existing code for validation and submission...
-            // Validate consent checkbox
-            const consentCheckbox = document.getElementById('consent');
-            if (!consentCheckbox) {
-                alert('Form error: Consent checkbox not found');
-                return;
-            }
-            if (!consentCheckbox.checked) {
-                showMessage('error', 'Please accept the consent to proceed.');
-                return;
-            }
-            // Get form data
-            const formData = {
-                formType: 'registration',
-                teamName: document.getElementById('teamName').value,
-                teamSize: document.getElementById('teamSize').value,
-                problemStatement: document.getElementById('problemStatement').value,
-                leaderName: document.getElementById('leaderName').value,
-                leaderEmail: document.getElementById('leaderEmail').value,
-                leaderPhone: document.getElementById('leaderPhone').value,
-                leaderDept: document.getElementById('leaderDept').value,
-                leaderYear: document.getElementById('leaderYear').value
-            };
-            // Get submit button
-            const submitBtn = registrationForm.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
-            // Send to backend
-            fetch(REGISTRATION_FORM_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            })
-            .then(() => {
-                showMessage('success', '🎉 Registration successful! Check your email for confirmation and further details.');
-                registrationForm.reset();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            })
-            .catch((error) => {
-                showMessage('error', 'Failed to submit registration. Please try again.');
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
-            });
-        });
-    }
 });
 
 // Show message function
