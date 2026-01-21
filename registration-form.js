@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const messageBanner = document.getElementById('runningMessageBanner');
     if (messageTextEl && messageBanner) {
         messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
+        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB';
     }
     disableRegistrationForm();
     handleRegisterButtons();
@@ -122,3 +122,4 @@ function showMessage(type, text) {
         setTimeout(() => popup.remove(), 300);
     }, 3000);
 }
+
