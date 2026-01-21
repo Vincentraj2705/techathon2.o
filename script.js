@@ -203,10 +203,10 @@ let testRegistrationDeadline = null;
 // Set registration deadline to tomorrow at 8:00 PM
 function getRegistrationDeadline() {
     const now = new Date();
-    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 20, 0, 0, 0); // Tomorrow 8:00 PM
+    let deadline = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 18, 0, 0, 0); // Tomorrow 8:00 PM
     // If today is already Jan 21 or later, keep deadline at Jan 21, 8:00 PM
     if (now.getMonth() === 0 && now.getDate() >= 21) {
-        deadline = new Date(now.getFullYear(), 0, 21, 20, 0, 0, 0);
+        deadline = new Date(now.getFullYear(), 0, 21, 18, 0, 0, 0);
     }
     return deadline.getTime();
 }
@@ -384,4 +384,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
+
 
