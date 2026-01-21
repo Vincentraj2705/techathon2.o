@@ -264,11 +264,11 @@ function updateRunningMessage() {
         messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
     }
     // Check if we're on January 21, 2026 (from midnight to 8 PM)
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 20)) {
+    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 18)) {
         messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
     }
     // After 8 PM on January 21
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 20) {
+    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 18) {
         messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
         messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB';
     }
@@ -302,7 +302,7 @@ function checkRegistrationStatus() {
     // Allow form action until 19:59 (7:59 PM) on Jan 21, 2026
     if (now < registrationDeadline) {
         // If it's Jan 21, 2026 and time is 20:00 or later, close
-        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 20) {
+        if (now.getFullYear() === 2026 && now.getMonth() === 0 && now.getDate() === 21 && now.getHours() >= 18) {
             return true; // Closed
         }
         return false; // Open
@@ -384,3 +384,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Email validation
+
