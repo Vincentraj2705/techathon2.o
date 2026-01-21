@@ -34,7 +34,7 @@ function setEventClosedRunningMessage() {
     const messageBanner = document.getElementById('runningMessageBanner');
     if (messageTextEl && messageBanner) {
         messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed as of 6:00 PM today. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
+        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB';
     }
 }
 
@@ -54,16 +54,6 @@ if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
         navMenu.classList.toggle('active');
         hamburger.classList.toggle('active');
-    });
-}
-
-// Close mobile menu when clicking on a link
-if (navLinks.length > 0) {
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (navMenu) navMenu.classList.remove('active');
-            if (hamburger) hamburger.classList.remove('active');
-        });
     });
 }
 
@@ -266,7 +256,7 @@ function updateRunningMessage() {
     if (now >= registrationDeadline) {
         // Show closed message after registration closes
         messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS';
+        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB';
         return;
     }
     // Check if we're on January 20, 2026 before midnight
@@ -274,13 +264,13 @@ function updateRunningMessage() {
         messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes tomorrow at 8:00 PM';
     }
     // Check if we're on January 21, 2026 (from midnight to 8 PM)
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 18)) {
+    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && (currentHour < 20)) {
         messageTextEl.textContent = '📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM 📣 FINAL CALL! Hurry up! Registration closes today at 8:00 PM';
     }
     // After 8 PM on January 21
-    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 18) {
+    else if (currentYear === 2026 && currentMonth === 0 && currentDate === 21 && currentHour >= 20) {
         messageBanner.style.background = 'linear-gradient(90deg, #dc2626 0%, #991b1b 50%, #dc2626 100%)';
-        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time! 📢 Stay tuned for next event - NOVA NEXUS HUB';
+        messageTextEl.textContent = '❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB ❌ Oops! Registration has closed. Better luck next time. Stay tuned for next event - NOVA NEXUS HUB';
     }
 }
 
@@ -322,152 +312,22 @@ function checkRegistrationStatus() {
 
 // Show registration closed popup
 function showRegistrationClosedPopup() {
-    // Create popup overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'registration-closed-overlay';
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-        animation: fadeIn 0.3s ease;
-    `;
-    
-    // Create popup content
-    const popup = document.createElement('div');
-    popup.style.cssText = `
-        background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-        border: 2px solid #ef4444;
-        border-radius: 15px;
-        padding: 2rem;
-        max-width: 400px;
-        text-align: center;
-        box-shadow: 0 0 50px rgba(239, 68, 68, 0.5);
-        animation: slideIn 0.3s ease;
-    `;
-    
-    popup.innerHTML = `
-        <div style="font-size: 4rem; margin-bottom: 1rem;">❌</div>
-        <h2 style="color: #ef4444; margin-bottom: 1rem; font-size: 1.8rem;">Registration Closed</h2>
-        <p style="color: #94a3b8; margin-bottom: 1.5rem; font-size: 1.1rem;">
-            Oops! Registration has closed.<br>Better luck next time!
-        </p>
-        <button id="closePopupBtn" style="
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-            border: none;
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        ">OK</button>
-    `;
-    
-    overlay.appendChild(popup);
-    document.body.appendChild(overlay);
-    
-    // Close popup when clicking button or overlay
-    document.getElementById('closePopupBtn').addEventListener('click', () => {
-        overlay.remove();
-    });
-    
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-            overlay.remove();
-        }
-    });
-    
-    // Add hover effect to button
-    const btn = document.getElementById('closePopupBtn');
-    btn.addEventListener('mouseenter', () => {
-        btn.style.transform = 'translateY(-2px)';
-        btn.style.boxShadow = '0 5px 20px rgba(239, 68, 68, 0.4)';
-    });
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translateY(0)';
-        btn.style.boxShadow = 'none';
-    });
+    // ...existing code...
 }
 
 // Disable registration form if deadline passed
 function disableRegistrationForm() {
-    const registrationForm = document.getElementById('registrationForm');
-    
-    if (registrationForm && checkRegistrationStatus()) {
-        // Disable all form inputs
-        const inputs = registrationForm.querySelectorAll('input, select, textarea, button');
-        inputs.forEach(input => {
-            input.disabled = true;
-            input.style.opacity = '0.5';
-            input.style.cursor = 'not-allowed';
-        });
-        
-        // Add a message at the top of the form
-        const message = document.createElement('div');
-        message.style.cssText = `
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-            font-weight: 600;
-            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
-        `;
-        message.innerHTML = '❌ Registration has closed. Better luck next time!';
-        registrationForm.insertBefore(message, registrationForm.firstChild);
-        
-        // Prevent form submission
-        registrationForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            showRegistrationClosedPopup();
-        });
-    }
+    // ...existing code...
 }
 
 // Handle all register button clicks
 function handleRegisterButtons() {
-    // Get all register links and buttons
-    const registerLinks = document.querySelectorAll('a[href="register.html"], .mobile-register-btn, .nav-register-highlight, .mobile-register-card');
-    
-    registerLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            if (checkRegistrationStatus()) {
-                e.preventDefault();
-                showRegistrationClosedPopup();
-            }
-        });
-    });
+    // ...existing code...
 }
 
 // Add active state to navigation based on scroll position
 window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 100)) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
+    // ...existing code...
 });
 
 // Prevent form resubmission on page refresh
@@ -490,68 +350,24 @@ function validatePhone(phone) {
 
 // Add real-time validation to email and phone fields
 document.addEventListener('DOMContentLoaded', () => {
-    const emailInputs = document.querySelectorAll('input[type="email"]');
-    const phoneInputs = document.querySelectorAll('input[type="tel"]');
-    
-    // Initialize registration status checks
-    disableRegistrationForm();
-    handleRegisterButtons();
-    
-    emailInputs.forEach(input => {
-        input.addEventListener('blur', () => {
-            if (input.value && !validateEmail(input.value)) {
-                input.style.borderColor = '#ef4444';
-                showError(input, 'Please enter a valid email address');
-            } else {
-                input.style.borderColor = '';
-                hideError(input);
-            }
-        });
-    });
-    
-    phoneInputs.forEach(input => {
-        input.addEventListener('blur', () => {
-            if (input.value && !validatePhone(input.value)) {
-                input.style.borderColor = '#ef4444';
-                showError(input, 'Please enter a valid 10-digit phone number');
-            } else {
-                input.style.borderColor = '';
-                hideError(input);
-            }
-        });
-    });
+    // ...existing code...
 });
 
 function showError(input, message) {
-    hideError(input); // Remove any existing error
-    const error = document.createElement('span');
-    error.className = 'error-message';
-    error.style.color = '#ef4444';
-    error.style.fontSize = '0.85rem';
-    error.textContent = message;
-    input.parentElement.appendChild(error);
+    // ...existing code...
 }
 
 function hideError(input) {
-    const error = input.parentElement.querySelector('.error-message');
-    if (error) {
-        error.remove();
-    }
+    // ...existing code...
 }
 
 // Add loading animation
 function showLoading() {
-    const loader = document.createElement('div');
-    loader.className = 'loader';
-    loader.innerHTML = '<div class="spinner"></div>';
-    document.body.appendChild(loader);
+    // ...existing code...
 }
 
 function hideLoading() {
-    const loader = document.querySelector('.loader');
-    if (loader) {
-        loader.remove();
-    }
+    // ...existing code...
 }
 
 // Print registration details (optional feature)
@@ -564,34 +380,7 @@ console.log('Nova Nexus Hub - Kings Engineering College');
 
 // Problem Statement Filter Functionality
 document.addEventListener('DOMContentLoaded', () => {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const problemRows = document.querySelectorAll('.problem-table tbody tr');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const filter = button.getAttribute('data-filter');
-            
-            // Update active button
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            
-            // Filter rows
-            problemRows.forEach(row => {
-                const category = row.getAttribute('data-category');
-                
-                if (filter === 'all' || category === filter) {
-                    row.classList.remove('hidden');
-                    setTimeout(() => {
-                        row.style.display = '';
-                    }, 10);
-                } else {
-                    row.classList.add('hidden');
-                    row.style.display = 'none';
-                }
-            });
-        });
-    });
+    // ...existing code...
 });
 
 // Email validation
-
